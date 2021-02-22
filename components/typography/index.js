@@ -16,6 +16,7 @@ const styles= StyleSheet.create({
     head:{
         fontSize: 18,
         fontWeight: "bold",
+        color:'#eee',
 
     },
     subhead:{
