@@ -1,101 +1,55 @@
 import React from 'react';
-import {StatusBar} from 'expo-status-bar';
-import {StyleSheet, View, Text, Image } from 'react-native';
-import { Ionicons , AntDesign  } from '@expo/vector-icons';
-import { Title , AllText } from './components/typography';
-import { Card } from './components/card';
+import { View, StyleSheet, Text, ScrollView,StatusBar,Modal} from 'react-native';
+import Header from './components/header';
+import Itemproducts from './components/itemproducts';
+import {Ionicons} from '@expo/vector-icons';
+import Additem from './components/additems';
 
+ 
 export default function App() {
+  const [isOpen, setIsOpen] = React.useState(false)
+
+  
+  const handleSubmit=(pdata)=>{
+    setIsOpen(false)
+  }
   return(
-    <View style={styles.home}>
-      <StatusBar hidden />
-      <View style={styles.banner}>
-        <Image style={styles.bannerimage} source={{uri:"https://cdn.xl.thumbs.canstockphoto.com/most-popular-fast-food-meal-chicken-nuggets-burgers-and-french-fries-on-black-and-yellow-picture_csp80354719.jpg"}} />
-        
-        <View style={styles.bannerleft}>
-          <Ionicons name="arrow-back-outline" size={32} color="black" />
-          <Text style={styles.bannerText}>American</Text>
-          <Text style={styles.bannersubText}>Food</Text>
-
-        </View>
-
-      </View>
-
-
-
-      <View style={styles.body}>
-        <View style={styles.bodystart}>
-          <View style={styles.filter}>
-            <Ionicons style={styles.images} name="options-outline" size={32} color="#F74080" />
-          </View>
-          <View style={styles.menu}>
-            <Card price="$ 23.00" name ={{uri:"https://i2.wp.com/www.foodrepublic.com/wp-content/uploads/2012/03/033_FR11785.jpg?fit=978%2C650&ssl=1"}} itemname="American Burger" itemdes="simply dummy text of the printing and typesetting industry. Lorem" time="45 min" rating="4.5"/>
-            <Card price="$ 20.00" name ={{uri:"https://www.skinnytaste.com/wp-content/uploads/2015/05/grilled-teriyaki-burger-550x825.jpg"}} itemname="Cheese Hot Dog" itemdes="simply dummy text of the printing and typesetting industry. Lorem" time="60 min" rating="4"/>
-               
-            
-          </View>
-
-        </View>
-
-      
-      </View>
+   
+  <View style={styles.home}>
+    <StatusBar hidden />
+    <Header />
+    <ScrollView>
+    <Itemproducts />
+    </ScrollView>
+    <View style={styles.add}>
+      <Ionicons name='add-outline' size={50} color='#047C18' onPress={() => setIsOpen(true)}/>
     </View>
-  );
-}
+    <Modal visible ={isOpen}>
+      <Additem cancel={() => setIsOpen(false)} submit={handleSubmit} />
 
-const styles = StyleSheet.create({
+    </Modal>
+  </View>
+ 
+)
+
+};
+
+const styles=StyleSheet.create({
   home:{
     flex: 1,
-    
+    backgroundColor:'#F9DCE6',
+    position:'relative',
   },
-  banner:{
-    flex:2,
-    
-  },
-  bannerimage:{
-    width: '100%',
-    height: 205,
+  add:{
+    height: 50,
+    width: 50,
+    borderRadius: 25 ,
+    backgroundColor: '#DF86A5',
     position:'absolute',
-  },
-  bannerleft:{
-    width: 200,
-    height: 150,
+    bottom: 30,
+    right: 10,
     justifyContent:'center',
-    marginHorizontal: 20,
-    
-  },
-  bannerText:{
-    fontSize:23,
-    marginTop: 40,
-    fontWeight:'bold',
-  },
-  bannersubText:{
-    fontSize:20,
-    fontStyle:'italic',
-  },
-  body:{
-    flex: 6,
-    backgroundColor:'white',
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
-  },
-  bodystart:{
-    marginHorizontal: 20,
-    marginTop: 5,
-  },
-  filter:{
-    
-    alignItems:'flex-end',
-    
-  },
-  images:{
-    padding: 5,
-    marginBottom: 5,
-    
-    elevation: 10,
-    borderRadius: 50,
-    shadowColor:'green',
-    shadowOpacity: 0.2,
+    alignItems:'center',
   },
   
-});
+})
