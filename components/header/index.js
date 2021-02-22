@@ -2,13 +2,13 @@ import React from 'react';
 import { StyleSheet, View, Image} from 'react-native';
 import {Ionicons} from '@expo/vector-icons';
 
-const Header = () => {
+const Header = props => {
     return <View style={styles.main}>
         <View style={styles.logopart}>
             <Image style={styles.logo} source={{uri:"http://assets.stickpng.com/thumbs/5a39338fc488ac6062ac2b13.png"}}/>
         </View>
         <View style={styles.filter}>
-            <Ionicons name='filter' size={22} color='#047C18' onPress={null} />
+            <Ionicons name='filter' size={22} color='#047C18' onPress={props.filterpage} />
         </View>
 
     </View>
