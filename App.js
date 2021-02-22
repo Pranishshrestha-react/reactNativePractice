@@ -1,4 +1,5 @@
 import React from 'react';
+import {StatusBar} from 'expo-status-bar';
 import {StyleSheet, View, Text, Image } from 'react-native';
 import { Ionicons , AntDesign  } from '@expo/vector-icons';
 import { Title , AllText } from './components/typography';
@@ -7,6 +8,7 @@ import { Card } from './components/card';
 export default function App() {
   return(
     <View style={styles.home}>
+      <StatusBar hidden />
       <View style={styles.banner}>
         <Image style={styles.bannerimage} source={{uri:"https://cdn.xl.thumbs.canstockphoto.com/most-popular-fast-food-meal-chicken-nuggets-burgers-and-french-fries-on-black-and-yellow-picture_csp80354719.jpg"}} />
         
