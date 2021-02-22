@@ -1,17 +1,17 @@
 import React from 'react';
 import {StyleSheet, View, Text, Image} from 'react-native';
 
-const Product= props => {
+const Imgblock= ({imgblock}) => {
     return(
         <View style={styles.bigbox}>
-            <Image style={styles.images} source={{uri:"https://assets.reebok.com/images/h_840,f_auto,q_auto:sensitive,fl_lossy/0992a8537ac540dd9a4aab2c010ae053_9366/Club_C_85_Shoes_White_BS7685_01_standard.jpg"}}/>
+            <Image style={styles.images} source={{uri:imgblock.purl}}/>
             <View style={styles.textonly}>
                 <View style={styles.upperbox}>
-                    <Text style={styles.imgprice}>Category</Text>
-                    <Text style={styles.imgprice}>Price</Text>
+                    <Text style={styles.imgprice}>{imgblock.category}</Text>
+                    <Text style={styles.imgprice}>{imgblock.pprice}</Text>
                 </View>
                 <View style={styles.lowerbox}>
-                    <Text style={styles.imgtitle}>TITLE</Text>
+                    <Text style={styles.imgtitle}>{imgblock.pname}</Text>
                     <Text style={styles.outline}></Text>
                 </View>
                 
@@ -65,4 +65,4 @@ const styles=StyleSheet.create({
     }
 
 });
-export default Product;
+export default Imgblock;
