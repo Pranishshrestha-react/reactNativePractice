@@ -2,14 +2,12 @@ import React from 'react';
 import {StyleSheet, View, Text, Image} from 'react-native';
 import Product from '../product';
 
-const ItemProducts=() =>{
+const ItemProducts=props =>{
     return(
         <View style={styles.box}>
-           <Product/>
-           <Product/>
-           <Product/>
-           <Product/>
-           <Product/> 
+          {
+              props.imgblocks.map(imgblock => <Product key={imgblock.id} imgblock={imgblock}/>)
+          }
 
            
         </View>
