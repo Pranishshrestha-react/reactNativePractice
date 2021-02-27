@@ -9,7 +9,7 @@ const Filter= props =>{
             <View style={styles.cross}>
                 <Entypo onPress={props.cancel} name="cross" size={32} color="#047C18" />
             </View>
-            <Text style={styles.headtext}>CHOOSE YOUR CATEGORY</Text>
+            <Text style={styles.headtext}>CHOOSE YOUR CATEGORY from all the list</Text>
         </View>
     );
 }
