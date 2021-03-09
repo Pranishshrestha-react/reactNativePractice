@@ -1,13 +1,13 @@
 import React from 'react';
-import {StyleSheet, View, Text, Image } from 'react-native';
+
+import { Provider as PaperProvider } from 'react-native-paper';
 
 
 export default function App() {
   return(
-    <View>
-      
+    <PaperProvider>
 
-      </View>
+    </PaperProvider>
   );
 }
 
