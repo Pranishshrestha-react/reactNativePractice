@@ -1,6 +1,9 @@
 import React from 'react';
 import {View, StyleSheet, Text, Button} from 'react-native';
+import Categories from '../components/categories.js';
 import FoodHeader from '../components/FoodHeader.js';
+import Populars from '../components/Populars.js';
+import Title from '../components/title.js';
 
 const HomeScreen= props =>{
     React.useLayoutEffect(()=>{
@@ -8,9 +11,10 @@ const HomeScreen= props =>{
     })
     return <View style={styles.screen}>
         <FoodHeader/>
-       {/*}
-        <Button title="GO TO DETAIL" onPress={()=> props.navigation.navigate('Detail')}/>
-*/}
+        <Title>Select a Category</Title>
+        <Categories/>
+        <Title>Popular</Title>
+        <Populars/>
     </View>
 
 }

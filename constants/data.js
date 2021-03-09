@@ -273,4 +273,4 @@ const CATEGORIES = [
   ]
   
   
-  export { CATEGORIES, FOODS 
+  export { CATEGORIES, FOODS }

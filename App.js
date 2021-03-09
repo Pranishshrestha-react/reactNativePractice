@@ -1,6 +1,4 @@
 import React from 'react';
-import { View, StyleSheet, Text, ScrollView,Modal} from 'react-native';
-import {Ionicons} from '@expo/vector-icons';
 import * as Font from 'expo-font';
 import AppLoading from 'expo-app-loading'
 import AppNavigator from './navigations/AppNavigator';
