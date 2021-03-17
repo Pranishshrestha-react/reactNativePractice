@@ -1,19 +1,24 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
-import { Appbar,Modal, TextInput, Checkbox, Button, List, Paragraph, Dialog, Portal } from 'react-native-paper';
+import { Appbar,Modal, TextInput, Checkbox, Button, List, Paragraph, Dialog, Portal, Text } from 'react-native-paper';
 import {useTheme} from '@react-navigation/native'
 import { useDispatch , useSelector } from 'react-redux';
-import { addTodos, markAsComplete } from '../store/actions/todos';
+import {addTodosToFirebase, getAllTodos, markTodoAsComplete } from '../store/actions/todos';
 
 const AllTodosScreen= props =>{
-    const dispatch= useDispatch();
-    const todos = useSelector(state => state.todosState.todos)
+    const {colors} = useTheme();
 
     const [visible, setVisible] = React.useState(false);
     const [title, setTitle] = React.useState('');
     const [description, setDescription] = React.useState('');
     const [selectedTodoId, setSelectedTodoId] = React.useState('');
     const [priority, setPriority] = React.useState(false);
+
+    const [openDialog, setOpenDialog]= React.useState(false); 
+    const hideDialog= () => setOpenDialog(false);
+
+    const dispatch= useDispatch();
+
     const showModal = () => setVisible(true);
     const hideModal = () => {
         setDescription('')
@@ -21,18 +26,15 @@ const AllTodosScreen= props =>{
         setTitle('')
         setVisible(false)
     }
-    const [openDialog, setOpenDialog]= React.useState(false);
-    const hideDialog= () => setOpenDialog(false);
-
+    
     const submitForm = () => {
        const todo = {
-           id: Math.random().toString(), 
            title,
            description,
            priority,
            isComplete: false,
        }  
-       dispatch(addTodos(todo))
+       dispatch(addTodosToFirebase(todo))
        hideModal();
     }
     const handleListTap = (id) =>{
@@ -40,7 +42,12 @@ const AllTodosScreen= props =>{
         setSelectedTodoId(id)
     }
 
-    const {colors} = useTheme()
+    const todos = useSelector(state => state.todosState.todos)
+
+    React.useEffect(() => {
+        dispatch(getAllTodos())
+    }, [])
+ 
     return <View style={{flex:1}}>
        <Appbar.Header style={{backgroundColor: colors.primary}}>
             <Appbar.Content title="All Todos" titleStyle={{color:'#fff'}}/>
@@ -90,7 +97,7 @@ const AllTodosScreen= props =>{
         <Dialog.Title>Do you want to mark this todo as complete</Dialog.Title>
         <Dialog.Actions>
           <Button onPress={hideDialog}>Cancel</Button>
-          <Button onPress={() => {dispatch(markAsComplete(selectedTodoId))
+          <Button onPress={() => {dispatch(markTodoAsComplete(selectedTodoId))
             setOpenDialog(false)
             }}>Yes</Button>
         </Dialog.Actions>

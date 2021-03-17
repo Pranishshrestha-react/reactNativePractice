@@ -1,4 +1,4 @@
-import { ADD_TODOS, MARK_AS_COMPLETE } from "../actions/todos";
+import { ADD_TODOS, GET_TODOS, MARK_AS_COMPLETE } from "../actions/todos";
 
  
 const initialState = {
@@ -8,10 +8,15 @@ const initialState = {
 const todosReducer = (state=initialState, action) => {
     switch (action.type) {
         case ADD_TODOS:
-            const updatedTodos = [action.payload, ...state.todos];
+            const updatedTodos = [...state.todos, action.payload];
             return{
                 ...state,
                 todos: updatedTodos
+            }
+        case GET_TODOS:
+            return {
+                ...state,
+                todos: action.payload
             }
         case MARK_AS_COMPLETE:
             const markedTodos = state.todos.map(todo=> {
