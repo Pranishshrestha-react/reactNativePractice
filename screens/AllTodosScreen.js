@@ -1,9 +1,9 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
-import { Appbar,Modal, TextInput, Checkbox, Button, List } from 'react-native-paper';
+import { Appbar,Modal, TextInput, Checkbox, Button, List, Paragraph, Dialog, Portal } from 'react-native-paper';
 import {useTheme} from '@react-navigation/native'
 import { useDispatch , useSelector } from 'react-redux';
-import { addTodos } from '../store/actions/todos';
+import { addTodos, markAsComplete } from '../store/actions/todos';
 
 const AllTodosScreen= props =>{
     const dispatch= useDispatch();
@@ -12,6 +12,7 @@ const AllTodosScreen= props =>{
     const [visible, setVisible] = React.useState(false);
     const [title, setTitle] = React.useState('');
     const [description, setDescription] = React.useState('');
+    const [selectedTodoId, setSelectedTodoId] = React.useState('');
     const [priority, setPriority] = React.useState(false);
     const showModal = () => setVisible(true);
     const hideModal = () => {
@@ -20,9 +21,12 @@ const AllTodosScreen= props =>{
         setTitle('')
         setVisible(false)
     }
+    const [openDialog, setOpenDialog]= React.useState(false);
+    const hideDialog= () => setOpenDialog(false);
+
     const submitForm = () => {
        const todo = {
-           id: Math.random().toString(),
+           id: Math.random().toString(), 
            title,
            description,
            priority,
@@ -30,6 +34,10 @@ const AllTodosScreen= props =>{
        }  
        dispatch(addTodos(todo))
        hideModal();
+    }
+    const handleListTap = (id) =>{
+        setOpenDialog(true);
+        setSelectedTodoId(id)
     }
 
     const {colors} = useTheme()
@@ -43,6 +51,7 @@ const AllTodosScreen= props =>{
     {
         todos.map(todo => {
             return  <List.Item
+            onPress={()=>{handleListTap(todo.id)}} 
             key={todo.id}
             title={todo.title}
             description={todo.description}
@@ -51,7 +60,7 @@ const AllTodosScreen= props =>{
          />
         })
     }
-    <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={{padding:20, margin:20, backgroundColor:'#fff'}}>
+    <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={{padding:20, margin:20, backgroundColor:'#fff'}}> 
         <TextInput 
         mode="outlined"
         label= "Title"
@@ -76,6 +85,17 @@ const AllTodosScreen= props =>{
             </Button>
         </View>
     </Modal>
+    <Portal>
+      <Dialog visible={openDialog} onDismiss={hideDialog}>
+        <Dialog.Title>Do you want to mark this todo as complete</Dialog.Title>
+        <Dialog.Actions>
+          <Button onPress={hideDialog}>Cancel</Button>
+          <Button onPress={() => {dispatch(markAsComplete(selectedTodoId))
+            setOpenDialog(false)
+            }}>Yes</Button>
+        </Dialog.Actions>
+      </Dialog>
+    </Portal>
     </View>
 
 }
